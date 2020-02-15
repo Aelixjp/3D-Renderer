@@ -1,4 +1,5 @@
 import {Vector, Dimension} from "./assets.js";
+import {cos, sin, proyectionMatrix} from "../global/Maths.js";
 export class Point extends Vector{
 
     constructor(x = 0, y= 0 , z = 0){
@@ -25,7 +26,7 @@ export class Square{
 
 export class Cube{
 
-    constructor(x = 0, y = 0, z = 20, w = 50){
+    constructor(x = 0, y = 0, z = 20, w = 50, angleRaiseSpeed = 1){
 
         this.distance = (25 / z);
         this.deltaSize = (w * this.distance) - w;
@@ -51,28 +52,95 @@ export class Cube{
             p15: this.square2.p4,
             p16: this.square2.p1
         }
+        this.angle = 0;
         this.name = 'cube';
+        this.angleRaiseSpeed = angleRaiseSpeed;
 
     }
 
-    updatePoints(rotationCallback){
+    raiseAngle(){
+        this.angle += this.angleRaiseSpeed;
+    }
+
+    decreaseAngle(){
+        this.angle -= this.angleRaiseSpeed;
+    }
+
+    resetAngle(){
+        this.angle = 0;
+    }
+
+    generalRotation(rotationMatrix, matrix){
+
+        if(matrix.length & rotationMatrix[0].length)
+        {
+            let increment = new Array(matrix.length).fill(0);
+            rotationMatrix.map((row, i) => row.map((col, j) => increment[i] += matrix[j] * rotationMatrix[i][j]));
+            return new Vector(...increment);
+        }
+
+        return new Vector();
+
+    }
+
+    applyRotation(rotationMatrix){
 
         let squareMatrix = new Array(this.squares[0].points.length);
         let newVecs = [];
 
         this.squares[0].points.forEach((point, i) =>{
-            squareMatrix = rotationCallback(Vector.vectorToMatrix(point));
+            squareMatrix = this.generalRotation(rotationMatrix, Vector.vectorToMatrix(point));
             newVecs.push(squareMatrix);
             this.squares[0].points[i] = new Point(squareMatrix.x, squareMatrix.y, squareMatrix.z);
         });
 
         this.squares[1].points.forEach((point, i) =>{
-            squareMatrix = rotationCallback(Vector.vectorToMatrix(point));
+            squareMatrix = this.generalRotation(rotationMatrix, Vector.vectorToMatrix(point));
             newVecs.push(squareMatrix);
             this.squares[1].points[i] = new Point(squareMatrix.x, squareMatrix.y, squareMatrix.z);
         });
 
+        this.resetAngle();
         return this.setCubeTransform(newVecs);
+
+    }
+
+    rotateX(optAngle){
+        
+        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const rotateXMatrix = [
+            [1, 0, 0],
+            [0, cos(angle), -sin(angle)],
+            [0, sin(angle), cos(angle)]
+        ];
+
+        return this.applyRotation(rotateXMatrix);
+
+    }
+
+    rotateY(optAngle){
+
+        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const rotateYMatrix = [
+            [cos(angle), 0, sin(angle)],
+            [0, 1, 0],
+            [-sin(angle), 0, cos(angle)]
+        ];
+
+        return this.applyRotation(rotateYMatrix);
+
+    }
+
+    rotateZ(optAngle){
+
+        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const rotateZMatrix = [
+            [cos(angle), -sin(angle), 0],
+            [sin(angle), cos(angle), 0],
+            [0, 0, 1]
+        ];
+
+        return this.applyRotation(rotateZMatrix);
 
     }
 

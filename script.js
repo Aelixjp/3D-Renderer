@@ -38,44 +38,38 @@ window.onload = ()=>{
 
                 //Left arrow
                 case 37:
-                    camera.raiseAngle();
-                    cube.updatePoints(camera.rotateY.bind(camera));
-                    camera.angle = 0;
+                    cube.raiseAngle();
+                    cube.rotateY();
                     break;
                 
                 //Up arrow
                 case 38:
-                    camera.decreaseAngle();
-                    cube.updatePoints(camera.rotateX.bind(camera));
-                    camera.angle = 0;
+                    cube.decreaseAngle();
+                    cube.rotateX();
                     break;
 
                 //Right arrow
                 case 39:
-                    camera.decreaseAngle();
-                    cube.updatePoints(camera.rotateY.bind(camera))
-                    camera.angle = 0;
+                    cube.decreaseAngle();
+                    cube.rotateY();
                     break;
 
                 //Down arrow
                 case 40:
-                    camera.raiseAngle();
-                    cube.updatePoints(camera.rotateX.bind(camera));
-                    camera.angle = 0;
+                    cube.raiseAngle();
+                    cube.rotateX();
                     break;
 
                 //A
                 case 65:
-                    camera.decreaseAngle();
-                    cube.updatePoints(camera.rotateZ.bind(camera))
-                    camera.angle = 0;
+                    cube.decreaseAngle();
+                    cube.rotateZ();
                     break;
 
                 //S
                 case 68:
-                    camera.raiseAngle();
-                    cube.updatePoints(camera.rotateZ.bind(camera))
-                    camera.angle = 0;
+                    cube.raiseAngle();
+                    cube.rotateZ();
                     break;
 
                 default:
