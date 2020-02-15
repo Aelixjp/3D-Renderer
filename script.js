@@ -1,8 +1,7 @@
 import {Scene} from "./global/Scene.js";
 import {Timer} from "./timer/Timer.js";
 import Renderer from "./global/Renderer.js";
-import {Point, Square, Cube} from "./assets/Shapes.js"
-import {Vector} from "./assets/assets.js";
+import {Cube} from "./assets/Shapes.js";
 import Camera from "./global/Camera.js";
 window.onload = ()=>{
 
@@ -27,49 +26,56 @@ window.onload = ()=>{
     }
 
     function setup(){
-        scene = new Scene(canvas, {width: CWIDTH, height: CHEIGHT});
+        scene = new Scene(canvas, {width: CWIDTH, height: CHEIGHT}, BG_COLOR);
         timer = new Timer(FPS_LIMIT);
         renderer = new Renderer(scene);
-        cube = new Cube(0, 0, 100, 100);
-        camera = new Camera(25);
+        cube = new Cube(0, 0, 300, 300);
+        camera = new Camera(1.9);
+        camera.proyect(cube);
         window.addEventListener("keydown", ev =>{
 
             switch(ev.keyCode){
 
                 //Left arrow
                 case 37:
-                    cube.raiseAngle();
+                    cube.decreaseAngle();
                     cube.rotateY();
+                    camera.proyect(cube)
                     break;
                 
                 //Up arrow
                 case 38:
-                    cube.decreaseAngle();
+                    cube.raiseAngle();
                     cube.rotateX();
+                    camera.proyect(cube)
                     break;
 
                 //Right arrow
                 case 39:
-                    cube.decreaseAngle();
+                    cube.raiseAngle();
                     cube.rotateY();
+                    camera.proyect(cube)
                     break;
 
                 //Down arrow
                 case 40:
-                    cube.raiseAngle();
+                    cube.decreaseAngle();
                     cube.rotateX();
+                    camera.proyect(cube)
                     break;
 
                 //A
                 case 65:
                     cube.decreaseAngle();
                     cube.rotateZ();
+                    camera.proyect(cube)
                     break;
 
                 //S
                 case 68:
                     cube.raiseAngle();
                     cube.rotateZ();
+                    camera.proyect(cube)
                     break;
 
                 default:

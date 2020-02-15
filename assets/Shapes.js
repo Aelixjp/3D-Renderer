@@ -1,5 +1,5 @@
 import {Vector, Dimension} from "./assets.js";
-import {cos, sin, proyectionMatrix} from "../global/Maths.js";
+import {cos, sin} from "../global/Maths.js";
 export class Point extends Vector{
 
     constructor(x = 0, y= 0 , z = 0){
@@ -28,8 +28,7 @@ export class Cube{
 
     constructor(x = 0, y = 0, z = 20, w = 50, angleRaiseSpeed = 1){
 
-        this.distance = (25 / z);
-        this.deltaSize = (w * this.distance) - w;
+        this.ORIGINAL_VECTORIAL_Z = z;
         this.square1 = new Square(x, y, -z, w);
         this.square2 = new Square(x, y, z, w);
         this.squares = [this.square1, this.square2];
@@ -107,7 +106,7 @@ export class Cube{
 
     rotateX(optAngle){
         
-        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const angle = optAngle ? Number.isFloat(optAngle) ? optAngle : this.angle : this.angle;
         const rotateXMatrix = [
             [1, 0, 0],
             [0, cos(angle), -sin(angle)],
@@ -120,7 +119,7 @@ export class Cube{
 
     rotateY(optAngle){
 
-        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const angle = optAngle ? Number.isFloat(optAngle) ? optAngle : this.angle : this.angle;
         const rotateYMatrix = [
             [cos(angle), 0, sin(angle)],
             [0, 1, 0],
@@ -133,7 +132,7 @@ export class Cube{
 
     rotateZ(optAngle){
 
-        const angle = optAngle ? Number.isInteger(optAngle) ? optAngle : this.angle : this.angle;
+        const angle = optAngle ? Number.isFloat(optAngle) ? optAngle : this.angle : this.angle;
         const rotateZMatrix = [
             [cos(angle), -sin(angle), 0],
             [sin(angle), cos(angle), 0],
