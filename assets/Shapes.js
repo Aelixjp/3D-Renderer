@@ -17,7 +17,7 @@ export class Square{
         this.p2 = new Point(x + w, y - w, z);
         this.p3 = new Point(x + w, y + w, z);
         this.p4 = new Point(x - w, y + w, z);
-        this.points = [this.p1, this.p2, this.p3, this.p4];
+        this.points = [this.p1,this.p2,this.p3,this.p4];
         this.name = 'square';
 
     }

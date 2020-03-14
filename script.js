@@ -1,7 +1,7 @@
 import {Scene} from "./global/Scene.js";
 import {Timer} from "./timer/Timer.js";
 import Renderer from "./global/Renderer.js";
-import {Cube} from "./assets/Shapes.js";
+import {Square, Cube} from "./assets/Shapes.js";
 import Camera from "./global/Camera.js";
 import Keyboard from "./global/Keyboard.js";
 window.onload = ()=>{
@@ -33,7 +33,7 @@ window.onload = ()=>{
         scene = new Scene(canvas, {width: CWIDTH, height: CHEIGHT}, BG_COLOR);
         timer = new Timer(FPS_LIMIT);
         renderer = new Renderer(scene);
-        cube = new Cube(0, 0, 300, 300);
+        cube = new Cube(0, 0, 300, 300, 2);
         camera = new Camera(1.9);
         camera.proyect(cube);
         keyboard = new Keyboard();
